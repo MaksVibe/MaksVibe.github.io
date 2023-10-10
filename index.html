@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test</title>
+    <style>
+      body {
+        color: #404040;
+      }
+      #root {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin: 0 auto;
+      }
+      #root > div {
+        position: relative;
+        width: 100%;
+        height: 100px;
+        max-width: 100px;
+        border: 1px solid #cccccc;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+        background-color: #ffffff;
+        transition: all 350ms ease-in;
+      }
+      #root > div:hover {
+        background-color: #eeeeee;
+        color: #111111;
+      }
+      .text {
+        position: absolute;
+        margin: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0 4px;
+        cursor: text;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Random divs</h1>
+    <div id="root"></div>
+  </body>
+  <script>
+    const rootDiv = document.getElementById('root');
+
+    const handleClick = (ev) => {
+      if (rootDiv.firstChild.id !== '1' && rootDiv.firstChild.id === ev.currentTarget.id) {
+        const nextElement = rootDiv.children[+ev.currentTarget.id];
+        rootDiv.insertBefore(ev.currentTarget, nextElement);
+      } else {
+        rootDiv.insertBefore(ev.currentTarget, rootDiv.firstChild);
+      }
+    };
+
+    function render() {
+      for (let i = 1; i <= 100; i++) {
+        const randomDiv = document.createElement('div');
+        randomDiv.id = i;
+        const innerElement = document.createElement('p');
+        innerElement.className = 'text';
+        const node = document.createTextNode(`div ${i}`);
+        innerElement.appendChild(node);
+        randomDiv.appendChild(innerElement);
+        randomDiv.addEventListener('click', handleClick);
+        rootDiv.appendChild(randomDiv);
+      }
+    }
+    render();
+  </script>
+</html>
